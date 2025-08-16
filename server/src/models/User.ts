@@ -1,7 +1,7 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import mongoose, { Schema, Document, Types } from 'mongoose';
 import bcrypt from 'bcryptjs';
 
-export interface IUser extends Document {
+export interface IUser extends Document<Types.ObjectId> {
   name: string;
   email: string;
   password: string;
@@ -27,7 +27,7 @@ UserSchema.pre('save', async function (next) {
   next();
 });
 
-// Method to compare password
+// Compare password
 UserSchema.methods.comparePassword = async function (candidate: string) {
   return bcrypt.compare(candidate, this.password);
 };
