@@ -8,17 +8,23 @@ import Products from './pages/Products';
 import Orders from './pages/Orders';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import PrivateRoute from './api/components/PrivateRoute';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
     children: [
-      { index: true, element: <Dashboard /> },
-      { path: 'products', element: <Products /> },
-      { path: 'orders', element: <Orders /> },
       { path: 'login', element: <Login /> },
       { path: 'register', element: <Register /> },
+      {
+        element: <PrivateRoute />,
+        children: [
+          { index: true, element: <Dashboard /> },
+          { path: 'products', element: <Products /> },
+          { path: 'orders', element: <Orders /> },
+        ]
+      }
     ],
   },
 ]);
