@@ -10,25 +10,20 @@ export default function Login() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(''); // Clear previous errors
+    setError('');
 
     try {
-      // The backend is running on port 5008, so we make the request there
       const response = await axios.post('http://localhost:5008/api/auth/login', {
         email,
         password,
       });
 
-      // Assuming the API returns a token on successful login
       const { token } = response.data;
 
-      // Store the token in localStorage for future authenticated requests
       localStorage.setItem('authToken', token);
 
-      // Redirect user to the dashboard
       navigate('/');
     } catch (err: any) {
-      // Handle login errors (e.g., invalid credentials)
       const errorMessage = err.response?.data?.message || 'Login failed. Please try again.';
       setError(errorMessage);
       console.error('Login error:', err.response?.data);
