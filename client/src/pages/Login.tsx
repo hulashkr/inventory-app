@@ -22,7 +22,7 @@ export default function Login() {
 
       localStorage.setItem('authToken', token);
 
-      navigate('/');
+      window.location.href = '/';
     } catch (err: any) {
       const errorMessage = err.response?.data?.message || 'Login failed. Please try again.';
       setError(errorMessage);

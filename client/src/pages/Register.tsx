@@ -27,7 +27,8 @@ export default function Register() {
 
       const { token } = response.data;
       localStorage.setItem('authToken', token);
-      navigate('/');
+      window.location.href = '/';
+
     } catch (err: any) {
       const errorMessage = err.response?.data?.message || 'Registration failed. Please try again.';
       setError(errorMessage);
