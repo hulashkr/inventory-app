@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import apiClient from '../api/axios';
+import AddProductModal from '../api/components/AddProductModal';
 
 interface Product {
   _id: string;
@@ -14,6 +15,7 @@ export default function Products() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -32,6 +34,9 @@ export default function Products() {
     fetchProducts();
   }, []);
 
+  const handleProductAdded = (newProduct: Product) => {
+    setProducts((prevProducts) => [newProduct, ...prevProducts]);
+  };
   if (loading) {
     return <p className="text-center text-gray-500">Loading products...</p>;
   }
@@ -78,6 +83,11 @@ export default function Products() {
           </tbody>
         </table>
       </div>
+      <AddProductModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onProductAdded={handleProductAdded}
+      />
     </div>
   );
 }
